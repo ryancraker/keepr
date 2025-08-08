@@ -25,7 +25,7 @@ public class KeepsService
     {
         Keep keep = _keepsRepository.GetKeepById(keepId);
         if (keep == null)
-            throw new Exception($"Invalid ID: {keepId}");
+            throw new Exception($"Invalid Keep ID: {keepId}");
         return keep;
     }
 
