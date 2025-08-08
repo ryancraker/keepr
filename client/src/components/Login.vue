@@ -1,17 +1,17 @@
 <script setup>
-import { computed } from 'vue';
-import { AppState } from '../AppState.js';
-import { AuthService } from '../services/AuthService.js';
+  import { computed } from 'vue';
+  import { AppState } from '../AppState.js';
+  import { AuthService } from '../services/AuthService.js';
 
-const identity = computed(() => AppState.identity)
-const account = computed(() => AppState.account)
+  const identity = computed(() => AppState.identity)
+  const account = computed(() => AppState.account)
 
-function login() {
-  AuthService.loginWithRedirect()
-}
-function logout() {
-  AuthService.logout()
-}
+  function login() {
+    AuthService.loginWithRedirect()
+  }
+  function logout() {
+    AuthService.logout()
+  }
 
 </script>
 
@@ -22,7 +22,7 @@ function logout() {
     </button>
     <div v-else>
       <div class="dropdown">
-        <div role="button" class="bg-dark selectable no-select" data-bs-toggle="dropdown" aria-expanded="false"
+        <div role="button" class=" selectable no-select" data-bs-toggle="dropdown" aria-expanded="false"
           title="open account menu">
           <div v-if="account?.picture || identity?.picture">
             <img :src="account?.picture || identity?.picture" alt="account photo" height="40" class="user-img" />
@@ -47,11 +47,11 @@ function logout() {
 </template>
 
 <style lang="scss" scoped>
-.user-img {
-  height: 40px;
-  width: 40px;
-  border-radius: 100px;
-  object-fit: cover;
-  object-position: center;
-}
+  .user-img {
+    height: 40px;
+    width: 40px;
+    border-radius: 100px;
+    object-fit: cover;
+    object-position: center;
+  }
 </style>
