@@ -6,3 +6,22 @@ CREATE TABLE IF NOT EXISTS accounts(
   email VARCHAR(255) UNIQUE COMMENT 'User Email',
   picture VARCHAR(255) COMMENT 'User Picture'
 ) default charset utf8mb4 COMMENT '';
+
+ALTER TABLE accounts
+ADD cover_img VARCHAR(255) COMMENT 'User Cover Image';
+
+CREATE TABLE vaults(
+  id INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
+  created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+  updated_at DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  name VARCHAR(255) NOT NULL,
+  description VARCHAR(1000) NOT NULL,
+  img VARCHAR(255) NOT NULL,
+  is_private BOOLEAN NOT NULL DEFAULT false,
+  creator_id VARCHAR(255) NOT NULL,
+  FOREIGN KEY (creator_id) REFERENCES accounts(id)
+);
+
+
+ALTER TABLE keeps
+ADD COLUMN views INT ;
