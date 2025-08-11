@@ -2,6 +2,7 @@
   import { AppState } from '@/AppState.js';
   import { Keep } from '@/models/Keep.js';
   import { keepsService } from '@/services/KeepsService.js';
+  import { logger } from '@/utils/Logger.js';
   import { Pop } from '@/utils/Pop.js';
   import { computed } from 'vue';
   const account = computed(() => AppState.account)
@@ -16,6 +17,18 @@
     }
     catch (error) {
       Pop.error(error);
+      logger.error('could not delete keep', error)
+    }
+  }
+
+  async function focusKeep() {
+    try {
+      logger.log(keep.keep.id)
+      keepsService.getKeepById(keep.keep.id)
+    }
+    catch (error) {
+      Pop.error(error);
+      logger.error('could not get keep by id', error)
     }
 
   }
@@ -23,18 +36,21 @@
 
 
 <template>
-  <div class="keep-card container-fluid" :style="{ backgroundImage: `url(${keep.keep.img})` }">
-    <button @click="deleteKeep()" type="button" class="delete-button" v-if="account?.id == keep.keep.creatorId"
-      title="Delete this keep"><i class="mdi mdi-close-circle"></i></button>
-    <div class="row h-100">
-      <div class="col-12">
-        <div class="d-flex justify-content-between align-items-end keep-title p-1">
-          <span>{{ keep.keep.name }}</span>
-          <img class="creator-pic" :src="keep.keep.creator.picture" :alt="keep.keep.creator.name">
+  <button class="focused-keep" data-bs-target="#focusedKeepModal" data-bs-toggle="modal" @click="focusKeep()">
+
+    <div class="keep-card container-fluid" :style="{ backgroundImage: `url(${keep.keep.img})` }">
+      <button @click="deleteKeep()" type="button" class="delete-button" v-if="account?.id == keep.keep.creatorId"
+        title="Delete this keep"><i class="mdi mdi-close-circle"></i></button>
+      <div class="row h-100">
+        <div class="col-12">
+          <div class="d-flex justify-content-between align-items-end keep-title p-1">
+            <span>{{ keep.keep.name }}</span>
+            <img class="creator-pic" :src="keep.keep.creator.picture" :alt="keep.keep.creator.name">
+          </div>
         </div>
       </div>
     </div>
-  </div>
+  </button>
 </template>
 
 
@@ -55,6 +71,20 @@
       opacity: 1;
       transition: ease .2s;
     }
+  }
+
+  .focused-keep {
+    height: 100%;
+    width: 100%;
+    border: none;
+    background-color: inherit;
+  }
+
+  .row {
+    background: #ffffff;
+    background: linear-gradient(179deg, rgba(255, 255, 255, 0) 46%, rgba(5, 0, 0, 0.84) 99%);
+    border-bottom-left-radius: 10px;
+    border-bottom-right-radius: 10px;
   }
 
   .delete-button {

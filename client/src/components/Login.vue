@@ -48,8 +48,8 @@
 
 <style lang="scss" scoped>
   .user-img {
-    height: 40px;
-    width: 40px;
+    height: 4rem;
+    aspect-ratio: 1/1;
     border-radius: 100px;
     object-fit: cover;
     object-position: center;

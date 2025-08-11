@@ -32,7 +32,8 @@ public class KeepsRepository
 
     public List<Keep> GetAllKeeps()
     {
-        string sql = @"SELECT * FROM keeps JOIN accounts ON keeps.creator_id = accounts.id;";
+        string sql =
+            @"SELECT * FROM keeps JOIN accounts ON keeps.creator_id = accounts.id ORDER BY keeps.id DESC;";
         List<Keep> keeps = _db.Query(
                 sql,
                 (Keep keep, Profile profile) =>
