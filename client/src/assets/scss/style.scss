@@ -11,6 +11,11 @@ main {
   display: flex;
   flex-direction: column;
 }
+	.creator-pic {
+		height: 50px;
+		aspect-ratio: 1/1;
+		border-radius: 50%;
+	}
 
 #pop-toast-container {
   display: flex;

@@ -10,7 +10,6 @@ class KeepsService {
 	async getKeepById(keepId) {
 		AppState.focusedKeep = null;
 		const res = await api.get(`api/keeps/${keepId}`);
-		logger.log(res.data);
 		AppState.focusedKeep = new Keep(res.data);
 	}
 	async createKeep(keepData) {
