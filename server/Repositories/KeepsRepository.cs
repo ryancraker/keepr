@@ -16,7 +16,7 @@ public class KeepsRepository
             (name, description, img, creator_id)
             VALUES (@name, @description, @img, @creatorId);
 
-            SELECT * FROM keeps JOIN accounts ON keeps.creator_id = accounts.id WHERE keeps.id = LAST_INSERT_ID();";
+            SELECT * FROM keeps_with_kept AS keeps JOIN accounts ON keeps.creator_id = accounts.id WHERE keeps.id = LAST_INSERT_ID();";
         Keep keep = _db.Query(
                 sql,
                 (Keep keep, Profile profile) =>
@@ -33,7 +33,7 @@ public class KeepsRepository
     public List<Keep> GetAllKeeps()
     {
         string sql =
-            @"SELECT * FROM keeps JOIN accounts ON keeps.creator_id = accounts.id ORDER BY keeps.id DESC;";
+            @"SELECT * FROM keeps_with_kept AS keeps JOIN accounts ON keeps.creator_id = accounts.id ORDER BY keeps.id DESC;";
         List<Keep> keeps = _db.Query(
                 sql,
                 (Keep keep, Profile profile) =>
@@ -50,7 +50,7 @@ public class KeepsRepository
     {
         string sql =
             @"
-      SELECT * FROM keeps JOIN accounts ON keeps.creator_id = accounts.id WHERE keeps.id = @keepId
+      SELECT * FROM keeps_with_kept AS keeps JOIN accounts ON keeps.creator_id = accounts.id WHERE keeps.id = @keepId
     ;";
         Keep keep = _db.Query(
                 sql,
@@ -65,6 +65,29 @@ public class KeepsRepository
         return keep;
     }
 
+    public List<Keep> GetKeepsByVaultId(int vaultId)
+    {
+        string sql =
+            @"
+        SELECT keeps.*, accounts.*, vault_keeps.* FROM keeps_with_kept AS keeps 
+        JOIN accounts ON keeps.creator_id  = accounts.id 
+        LEFT JOIN vault_keeps ON keeps.id = vault_keeps.keep_id 
+        WHERE vault_keeps.vault_id = @vaultId
+    ;";
+        List<Keep> keeps = _db.Query(
+                sql,
+                (Keep keep, Profile profile, VaultKeep vaultKeep) =>
+                {
+                    keep.Creator = profile;
+                    keep.VaultKeepId = vaultKeep.Id;
+                    return keep;
+                },
+                new { vaultId }
+            )
+            .ToList();
+        return keeps;
+    }
+
     public void UpdateKeep(Keep updatedKeep)
     {
         string sql =
@@ -76,5 +99,24 @@ public class KeepsRepository
     {
         string sql = @"DELETE FROM keeps WHERE id = @keepId LIMIT 1;";
         _db.Execute(sql, new { keepId });
+    }
+
+    public List<Keep> GetKeepsByProfileId(string profileId)
+    {
+        string sql =
+            @"
+        SELECT * FROM keeps_with_kept AS keeps JOIN accounts ON keeps.creator_id = accounts.id WHERE keeps.creator_id = @profileId ORDER BY keeps.id DESC;
+    ;";
+        List<Keep> keeps = _db.Query(
+                sql,
+                (Keep keep, Profile profile) =>
+                {
+                    keep.Creator = profile;
+                    return keep;
+                },
+                new { profileId }
+            )
+            .ToList();
+        return keeps;
     }
 }

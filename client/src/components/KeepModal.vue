@@ -45,7 +45,6 @@
 		--bs-modal-header-padding-x: 0;
 		--bs-modal-header-padding-y: 0;
 		--bs-modal-header-padding: 0;
-		--bs-modal-width: 1000px;
 	}
 	.modal-backdrop {
 		background-color: rgba(178, 189, 194, 153);

@@ -35,7 +35,7 @@ public class VaultsRepository
     {
         string sql =
             @"
-        SELECT * FROM vaults JOIN accounts ON vaults.creator_id = accounts.id WHERE vaults.id = @vaultId
+        SELECT * FROM vaults JOIN accounts ON vaults.creator_id = accounts.id WHERE vaults.id = @vaultId LIMIT 1
     ;";
         Vault vault = _db.Query(
                 sql,
@@ -61,5 +61,25 @@ public class VaultsRepository
     {
         string sql = @"DELETE FROM vaults WHERE id = @vaultId LIMIT 1;";
         _db.Execute(sql, new { vaultId });
+    }
+
+    public List<Vault> GetPublicVaultsByProfileId(string profileId)
+    {
+        string sql =
+            @"
+    SELECT * FROM vaults WHERE creator_id = @profileId AND is_private = false
+    ;";
+        List<Vault> vaults = _db.Query<Vault>(sql, new { profileId }).ToList();
+        return vaults;
+    }
+
+    public List<Vault> GetPrivateVaultsByProfileId(string profileId)
+    {
+        string sql =
+            @"
+    SELECT * FROM vaults WHERE creator_id = @profileId
+    ;";
+        List<Vault> vaults = _db.Query<Vault>(sql, new { profileId }).ToList();
+        return vaults;
     }
 }

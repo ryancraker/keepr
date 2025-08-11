@@ -29,6 +29,12 @@ public class KeepsService
         return keep;
     }
 
+    public List<Keep> GetKeepsByVaultId(int vaultId)
+    {
+        List<Keep> keeps = _keepsRepository.GetKeepsByVaultId(vaultId);
+        return keeps;
+    }
+
     public Keep UpdateKeep(int keepId, Keep keepdata, Account userInfo)
     {
         Keep updatedKeep = GetKeepById(keepId);
@@ -47,5 +53,11 @@ public class KeepsService
             throw new Exception($"You may not delete another's keep, {userInfo.Name.ToUpper()}!");
         _keepsRepository.DeleteKeep(keepId);
         return $"{keepToDelete.Name} has been delete";
+    }
+
+    public List<Keep> GetKeepsByProfileId(string profileId)
+    {
+        List<Keep> keeps = _keepsRepository.GetKeepsByProfileId(profileId);
+        return keeps;
     }
 }

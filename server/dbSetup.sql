@@ -22,6 +22,25 @@ CREATE TABLE vaults(
   FOREIGN KEY (creator_id) REFERENCES accounts(id)
 );
 
+CREATE TABLE vault_keeps(
+  id INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
+  created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+  updated_at DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  keep_id INT NOT NULL,
+  vault_id INT NOT NULL,
+  creator_id VARCHAR(255) NOT NULL,
+  Foreign Key (keep_id) REFERENCES keeps(id) ON DELETE CASCADE,
+  Foreign Key (vault_id) REFERENCES vaults(id) ON DELETE CASCADE,
+  Foreign Key (creator_id) REFERENCES accounts(id) ON DELETE CASCADE
+)
+
+DROP TABLE vault_keep;
+
+CREATE VIEW
+keeps_with_kept AS
+SELECT keeps.*, COUNT(vault_keeps.id)AS kept FROM keeps LEFT JOIN vault_keeps ON keeps.id = vault_keeps.keep_id GROUP BY keeps.id
+
+SELECT * FROM keeps_with_kept
 
 ALTER TABLE keeps
 ADD COLUMN views INT ;

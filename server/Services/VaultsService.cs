@@ -15,10 +15,32 @@ public class VaultsService
         return vault;
     }
 
-    public Vault GetVaultById(int vaultId)
+    public List<Vault> GetVaultsByProfileId(string profileId, Account userInfo)
+    {
+        List<Vault> vaults = null;
+        if (profileId != userInfo?.Id)
+        {
+            vaults = _vaultsRepository.GetPublicVaultsByProfileId(profileId);
+        }
+        else
+        {
+            vaults = _vaultsRepository.GetPrivateVaultsByProfileId(profileId);
+        }
+        return vaults;
+    }
+
+    private Vault GetVaultById(int vaultId)
     {
         Vault vault = _vaultsRepository.GetVaultById(vaultId);
         if (vault == null)
+            throw new Exception($"Invalid Vault ID:{vaultId}");
+        return vault;
+    }
+
+    public Vault GetVaultById(int vaultId, Account userInfo)
+    {
+        Vault vault = GetVaultById(vaultId);
+        if (vault.IsPrivate == true && vault.CreatorId != userInfo?.Id)
             throw new Exception($"Invalid Vault ID:{vaultId}");
         return vault;
     }
