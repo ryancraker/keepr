@@ -2,38 +2,39 @@ namespace keepr.Services;
 
 public class AccountService
 {
-  private readonly AccountsRepository _repo;
+    private readonly AccountsRepository _repo;
 
-  public AccountService(AccountsRepository repo)
-  {
-    _repo = repo;
-  }
-
-  private Account GetAccount(string accountId)
-  {
-    Account account = _repo.GetById(accountId);
-    if (account == null)
+    public AccountService(AccountsRepository repo)
     {
-      throw new Exception("Invalid Account Id");
+        _repo = repo;
     }
-    return account;
-  }
 
-  internal Account GetOrCreateAccount(Account userInfo)
-  {
-    Account account = _repo.GetById(userInfo.Id);
-    if (account == null)
+    private Account GetAccount(string accountId)
     {
-      return _repo.Create(userInfo);
+        Account account = _repo.GetById(accountId);
+        if (account == null)
+        {
+            throw new Exception("Invalid Account Id");
+        }
+        return account;
     }
-    return account;
-  }
 
-  internal Account Edit(Account editData, string accountId)
-  {
-    Account original = GetAccount(accountId);
-    original.Name = editData.Name ?? original.Name;
-    original.Picture = editData.Picture ?? original.Picture;
-    return _repo.Edit(original);
-  }
+    internal Account GetOrCreateAccount(Account userInfo)
+    {
+        Account account = _repo.GetById(userInfo.Id);
+        if (account == null)
+        {
+            return _repo.Create(userInfo);
+        }
+        return account;
+    }
+
+    internal Account Edit(Account editData, string accountId)
+    {
+        Account original = GetAccount(accountId);
+        original.Name = editData.Name ?? original.Name;
+        original.Picture = editData.Picture ?? original.Picture;
+        original.CoverImg = editData.CoverImg ?? original.CoverImg;
+        return _repo.Edit(original);
+    }
 }
