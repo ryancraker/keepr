@@ -47,7 +47,7 @@
 					<div class="col-6 keep-info">
 						<div class="row">
 							<div class="col-12 text-center pt-1">
-								<span class="fs-4">Kept: {{ keep.kept }}</span>
+								<span class="fs-4">Kept: {{ keep.kept }}|Views: {{ keep.views }}</span>
 							</div>
 							<div class="col-12">
 								<p class="fs-1 text-center">{{ keep.name }}</p>

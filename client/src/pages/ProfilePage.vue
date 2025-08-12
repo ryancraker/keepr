@@ -13,7 +13,6 @@
 		getVaultsByProfileId();
 		getKeepsByProfileId();
 	});
-
 	const profile = computed(() => AppState.profile);
 	const route = useRoute();
 	const profileId = route.params.profileId;
@@ -92,7 +91,7 @@
 		object-fit: cover;
 		position: absolute;
 		bottom: -25%;
-		left: 43%;
+		left: 42%;
 		border: solid thin white;
 		box-shadow: 0px 0px 4px black;
 	}

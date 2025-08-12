@@ -7,8 +7,8 @@ CREATE TABLE IF NOT EXISTS accounts(
   picture VARCHAR(255) COMMENT 'User Picture'
 ) default charset utf8mb4 COMMENT '';
 
-ALTER TABLE accounts
-ADD cover_img VARCHAR(255) COMMENT 'User Cover Image';
+ALTER TABLE keeps
+ADD views INT NOT NULL;
 
 CREATE TABLE vaults(
   id INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
@@ -40,7 +40,7 @@ CREATE VIEW
 keeps_with_kept AS
 SELECT keeps.*, COUNT(vault_keeps.id)AS kept FROM keeps LEFT JOIN vault_keeps ON keeps.id = vault_keeps.keep_id GROUP BY keeps.id
 
-SELECT * FROM keeps_with_kept
+DROP VIEW keeps_with_kept
 
 ALTER TABLE keeps
 ADD COLUMN views INT ;

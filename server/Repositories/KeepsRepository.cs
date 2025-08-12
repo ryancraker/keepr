@@ -119,4 +119,10 @@ public class KeepsRepository
             .ToList();
         return keeps;
     }
+
+    public void ViewKeep(Keep keep)
+    {
+        string sql = "UPDATE keeps SET views = @Views WHERE id = @Id LIMIT 1;";
+        _db.Execute(sql, keep);
+    }
 }

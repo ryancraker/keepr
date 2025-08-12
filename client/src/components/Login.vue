@@ -1,57 +1,68 @@
 <script setup>
-  import { computed } from 'vue';
-  import { AppState } from '../AppState.js';
-  import { AuthService } from '../services/AuthService.js';
+	import { computed } from "vue";
+	import { AppState } from "../AppState.js";
+	import { AuthService } from "../services/AuthService.js";
+	import { useRoute, useRouter } from "vue-router";
 
-  const identity = computed(() => AppState.identity)
-  const account = computed(() => AppState.account)
+	const identity = computed(() => AppState.identity);
+	const account = computed(() => AppState.account);
+	const router = useRouter();
+	const route = useRoute();
 
-  function login() {
-    AuthService.loginWithRedirect()
-  }
-  function logout() {
-    AuthService.logout()
-  }
-
+	function login() {
+		AuthService.loginWithRedirect();
+	}
+	function logout() {
+		AuthService.logout();
+	}
 </script>
 
 <template>
-  <span class="navbar-text">
-    <button class="btn selectable text-green" @click="login" v-if="!identity">
-      Login
-    </button>
-    <div v-else>
-      <div class="dropdown">
-        <div role="button" class=" selectable no-select" data-bs-toggle="dropdown" aria-expanded="false"
-          title="open account menu">
-          <div v-if="account?.picture || identity?.picture">
-            <img :src="account?.picture || identity?.picture" alt="account photo" height="40" class="user-img" />
-          </div>
-        </div>
-        <div class="dropdown-menu dropdown-menu-sm-end dropdown-menu-start p-0" role="menu" title="account menu">
-          <div class="list-group">
-            <RouterLink :to="{ name: 'Account' }">
-              <div class="list-group-item dropdown-item list-group-item-action">
-                Manage Account
-              </div>
-            </RouterLink>
-            <div class="list-group-item dropdown-item list-group-item-action text-danger selectable" @click="logout">
-              <i class="mdi mdi-logout"></i>
-              logout
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </span>
+	<span class="navbar-text">
+		<button class="btn selectable text-green" @click="login" v-if="!identity">Login</button>
+		<div v-else>
+			<div class="dropdown">
+				<div
+					role="button"
+					class="selectable no-select"
+					data-bs-toggle="dropdown"
+					aria-expanded="false"
+					title="open account menu">
+					<div v-if="account?.picture || identity?.picture">
+						<img
+							:src="account?.picture || identity?.picture"
+							alt="account photo"
+							height="40"
+							class="user-img" />
+					</div>
+				</div>
+				<div
+					class="dropdown-menu dropdown-menu-sm-end dropdown-menu-start p-0"
+					role="menu"
+					title="account menu">
+					<div v-if="account" class="list-group">
+						<RouterLink :to="{ name: 'Profile', params: { profileId: account.id } }">
+							<div class="list-group-item dropdown-item list-group-item-action">Manage Account</div>
+						</RouterLink>
+						<div
+							class="list-group-item dropdown-item list-group-item-action text-danger selectable"
+							@click="logout">
+							<i class="mdi mdi-logout"></i>
+							logout
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</span>
 </template>
 
 <style lang="scss" scoped>
-  .user-img {
-    height: 4rem;
-    aspect-ratio: 1/1;
-    border-radius: 100px;
-    object-fit: cover;
-    object-position: center;
-  }
+	.user-img {
+		height: 4rem;
+		aspect-ratio: 1/1;
+		border-radius: 100px;
+		object-fit: cover;
+		object-position: center;
+	}
 </style>
