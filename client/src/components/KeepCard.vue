@@ -43,16 +43,25 @@
 			title="Delete this keep">
 			<i class="mdi mdi-close-circle"></i>
 		</button>
-		<div
-			role="button"
-			@click="focusKeep()"
-			data-bs-target="#focusedKeepModal"
-			data-bs-toggle="modal"
-			class="row h-100">
+		<div class="row h-100">
+			<div
+				role="button"
+				@click="focusKeep()"
+				data-bs-target="#focusedKeepModal"
+				data-bs-toggle="modal"
+				class="h-80"
+				:title="`Open '${keep.keep.name}' in a modal`"></div>
 			<div class="col-12">
-				<div class="d-flex justify-content-between align-items-end keep-title p-1">
+				<div
+					class="d-flex justify-content-between align-items-end keep-title p-1 position-relative">
 					<span>{{ keep.keep.name }}</span>
-					<img class="creator-pic" :src="keep.keep.creator.picture" :alt="keep.keep.creator.name" />
+					<RouterLink :to="{ name: 'Profile', params: { profileId: keep.keep.creatorId } }">
+						<img
+							:title="`Go to ${keep.keep.creator.name}'s page`"
+							class="creator-pic"
+							:src="keep.keep.creator.picture"
+							:alt="keep.keep.creator.name" />
+					</RouterLink>
 				</div>
 			</div>
 		</div>
@@ -113,5 +122,8 @@
 		height: 50px;
 		aspect-ratio: 1/1;
 		border-radius: 50%;
+		position: absolute;
+		bottom: 5px;
+		right: 0;
 	}
 </style>
