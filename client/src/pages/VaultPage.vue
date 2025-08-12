@@ -1,5 +1,7 @@
 <script setup>
 	import { AppState } from "@/AppState.js";
+	import KeepCard from "@/components/KeepCard.vue";
+	import VaultKeepCard from "@/components/VaultKeepCard.vue";
 	import { vaultsService } from "@/services/VaultsService.js";
 	import { logger } from "@/utils/Logger.js";
 	import { Pop } from "@/utils/Pop.js";
@@ -67,7 +69,7 @@
 				</div>
 			</div>
 			<div class="col-12 text-center mt-2">
-				<div v-if="vault.creatorId == account.id" class="dropdown">
+				<div v-if="vault.creatorId == account?.id" class="dropdown">
 					<button
 						class="btn btn-secondary dropdown-toggle"
 						type="button"
@@ -81,6 +83,13 @@
 				</div>
 
 				<span>{{ keeps.length }} Keeps</span>
+			</div>
+			<div class="col-12">
+				<div class="row">
+					<div v-for="keep in keeps" :key="keep.id" class="col-3">
+						<VaultKeepCard :keep />
+					</div>
+				</div>
 			</div>
 		</div>
 	</section>

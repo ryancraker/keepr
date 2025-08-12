@@ -1,5 +1,7 @@
 <script setup>
 	import { AppState } from "@/AppState.js";
+	import AccountForm from "@/components/AccountForm.vue";
+	import FormModalWrapper from "@/components/FormModalWrapper.vue";
 	import KeepCard from "@/components/KeepCard.vue";
 	import VaultCard from "@/components/VaultCard.vue";
 	import { profilesService } from "@/services/ProfilesService.js";
@@ -18,6 +20,7 @@
 	const profileId = route.params.profileId;
 	const vaults = computed(() => AppState.vaults);
 	const keeps = computed(() => AppState.keeps);
+	const account = computed(() => AppState.account);
 
 	async function getProfileById() {
 		try {
@@ -54,7 +57,17 @@
 				<img class="creator-pic" :src="profile.picture" :alt="`${profile.name}'s profile image'`" />
 			</div>
 			<div class="col-12 text-center">
-				<p class="text-center fw-bold fs-1">{{ profile.name }}</p>
+				<p class="text-center fw-bold fs-1">
+					{{ profile.name }}
+					<button
+						type="button"
+						data-bs-toggle="modal"
+						data-bs-target="#accountModal"
+						class="btn"
+						v-if="account?.id == profileId">
+						<i class="mdi mdi-cog"></i>
+					</button>
+				</p>
 				<span class="fs-5">{{ vaults.length }} Vaults | {{ keeps.length }} Keeps</span>
 			</div>
 			<div class="col-12">
@@ -75,6 +88,9 @@
 			</div>
 		</div>
 	</section>
+	<FormModalWrapper modalId="account" modalHeader="Update your account">
+		<AccountForm />
+	</FormModalWrapper>
 </template>
 
 <style lang="scss" scoped>

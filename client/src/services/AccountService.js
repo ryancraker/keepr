@@ -5,6 +5,12 @@ import { logger } from "../utils/Logger.js";
 import { api } from "./AxiosService.js";
 
 class AccountService {
+	async updateAccount(editableAccountData) {
+		const res = await api.put("account", editableAccountData);
+		logger.log(res.data);
+		AppState.account = new Account(res.data);
+		AppState.profile = new Account(res.data);
+	}
 	async getMyVaults() {
 		const res = await api.get("account/vaults");
 		logger.log(res.data);
