@@ -95,7 +95,7 @@
 			</div>
 		</div>
 	</section>
-	<section>
+	<section v-else>
 		<h1>LOADING...<i class="mdi mdi-loading mdi-spin"></i></h1>
 	</section>
 </template>

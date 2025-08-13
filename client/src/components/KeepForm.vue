@@ -36,7 +36,7 @@
 							<img
 								id="img-preview"
 								v-if="editableKeepForm.img?.length > 10"
-								class="img-fluid"
+								class="img-fluid img-preview"
 								:src="editableKeepForm.img"
 								alt="Preview of your keep" />
 						</div>

@@ -30,6 +30,12 @@
 			vaultKeepData.value.keepId = keep.value.id;
 			logger.log(vaultKeepData.value);
 			await vaultKeepsService.addKeepToVault(vaultKeepData.value);
+			Pop.success(
+				`${keep.value.name} has been added to ${
+					myVaults.value.find(vault => vault.id == vaultKeepData.value.vaultId).name
+				}`
+			);
+			vaultKeepData.value.vaultId = null;
 		} catch (error) {
 			Pop.error(error);
 			logger.error(error);
@@ -55,26 +61,36 @@
 								<span>{{ keep.description }}</span>
 							</div>
 							<div class="d-flex">
-
-								<form v-if="account" class="col-6 d-flex align-items-end mb-2 gap-1" @submit.prevent="addKeepToVault()">
+								<form
+									v-if="account"
+									class="col-6 d-flex align-items-end mb-2 gap-1"
+									@submit.prevent="addKeepToVault()">
 									<div class="d-flex gap-2">
 										<label for="vault"></label>
-										<select v-model="vaultKeepData.vaultId" class="form-select" aria-label="Select from your vaults"
-											id="vault" required>
+										<select
+											v-model="vaultKeepData.vaultId"
+											class="form-select"
+											aria-label="Select from your vaults"
+											id="vault"
+											required>
 											<option disabled selected>Select a Vault</option>
 											<option v-for="vault in myVaults" :key="vault.id" :value="vault.id">
 												{{ vault.name }}
 											</option>
 										</select>
-										<button>save</button>
+										<button class="btn btn-secondary">save</button>
 									</div>
 								</form>
 								<div class="d-flex align-items-end justify-content-end gap-3 mb-2 col-6">
 									<RouterLink :to="{ name: 'Profile', params: { profileId: keep.creatorId } }">
-										<div class="d-flex align-items-end gap-2"
+										<div
+											class="d-flex align-items-end gap-2"
 											@click="Modal.getOrCreateInstance('#focusedKeepModal').hide()">
 											<span class="fw-bold fs-3">{{ keep.creator.name }}</span>
-											<img class="creator-pic" :src="keep.creator.picture" :alt="keep.creator.name" />
+											<img
+												class="creator-pic"
+												:src="keep.creator.picture"
+												:alt="keep.creator.name" />
 										</div>
 									</RouterLink>
 								</div>

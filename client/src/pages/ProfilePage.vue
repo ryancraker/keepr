@@ -128,6 +128,7 @@
 
 	.profile-header {
 		margin-bottom: 10dvh;
+		min-height: 35dvh;
 	}
 
 	.profile-keep {

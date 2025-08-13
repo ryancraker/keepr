@@ -13,7 +13,9 @@
 			:style="{ backgroundImage: `url(${vault.img})` }">
 			<div class="row">
 				<div class="col-12">
-					<span class="vault-title">{{ vault.name }}</span>
+					<span class="vault-title"
+						>{{ vault.name }} <span v-if="vault.isPrivate"><i class="mdi mdi-lock"></i></span
+					></span>
 				</div>
 			</div>
 		</div>
