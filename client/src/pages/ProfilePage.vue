@@ -2,6 +2,7 @@
 	import { AppState } from "@/AppState.js";
 	import AccountForm from "@/components/AccountForm.vue";
 	import FormModalWrapper from "@/components/FormModalWrapper.vue";
+	import HomeKeepCard from "@/components/HomeKeepCard.vue";
 	import KeepCard from "@/components/KeepCard.vue";
 	import VaultCard from "@/components/VaultCard.vue";
 	import { profilesService } from "@/services/ProfilesService.js";
@@ -55,7 +56,11 @@
 			<div class="col-12 text-center position-relative profile-header">
 				<img class="cover-img" :src="profile.coverImg" :alt="`${profile.name}'s cover image'`" />
 				<img class="creator-pic" :src="profile.picture" :alt="`${profile.name}'s profile image'`" />
-				<button type="button" data-bs-toggle="modal" data-bs-target="#accountModal" class="btn edit-button"
+				<button
+					type="button"
+					data-bs-toggle="modal"
+					data-bs-target="#accountModal"
+					class="btn edit-button"
 					v-if="account?.id == profileId">
 					<i class="mdi mdi-dots-horizontal"></i>
 				</button>
@@ -77,8 +82,10 @@
 			<div class="col-12">
 				<p class="fs-1 fw-bold">Keeps</p>
 				<div class="row">
-					<div class="col-3 mb-4 profile-keep" v-for="keep in keeps" :key="keep.id">
-						<KeepCard :keep />
+					<div class="masonry-container mt-2">
+						<div class="my-4 profile-keep" v-for="keep in keeps" :key="keep.id">
+							<HomeKeepCard :keep />
+						</div>
 					</div>
 				</div>
 			</div>

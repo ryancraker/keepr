@@ -1,27 +1,35 @@
-@import '_main.scss';
+@import "_main.scss";
 
 #app {
-  display: flex;
-  flex-direction: column;
-  min-height: 100dvh;
+	display: flex;
+	flex-direction: column;
+	min-height: 100dvh;
 }
 
 main {
-  flex-grow: 1;
-  display: flex;
-  flex-direction: column;
+	flex-grow: 1;
+	display: flex;
+	flex-direction: column;
 }
-	.creator-pic {
-		height: 50px;
-		aspect-ratio: 1/1;
-		border-radius: 50%;
-    object-fit: cover;
-    object-position: center;
+.creator-pic {
+	height: 50px;
+	aspect-ratio: 1/1;
+	border-radius: 50%;
+	object-fit: cover;
+	object-position: center;
+}
+.masonry-container {
+	columns: 20dvw;
+
+	> * {
+		break-inside: avoid;
+		display: inline-block;
 	}
+}
 
 #pop-toast-container {
-  display: flex;
-  flex-direction: column;
-  justify-content: start;
-  align-items: end;
+	display: flex;
+	flex-direction: column;
+	justify-content: start;
+	align-items: end;
 }

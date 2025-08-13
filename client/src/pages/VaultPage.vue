@@ -1,6 +1,6 @@
 <script setup>
 	import { AppState } from "@/AppState.js";
-	import VaultKeepCard from "@/components/VaultKeepCard.vue";
+	import HomeKeepCard from "@/components/HomeKeepCard.vue";
 	import { vaultsService } from "@/services/VaultsService.js";
 	import { logger } from "@/utils/Logger.js";
 	import { Pop } from "@/utils/Pop.js";
@@ -86,12 +86,17 @@
 			</div>
 			<div class="col-12">
 				<div class="row">
-					<div v-for="keep in keeps" :key="keep.id" class="col-md-3 col-6 keep">
-						<VaultKeepCard :keep />
+					<div class="masonry-container mt-2">
+						<div v-for="keep in keeps" :key="keep.id" class="mb-3">
+							<HomeKeepCard :keep />
+						</div>
 					</div>
 				</div>
 			</div>
 		</div>
+	</section>
+	<section>
+		<h1>LOADING...<i class="mdi mdi-loading mdi-spin"></i></h1>
 	</section>
 </template>
 
@@ -111,7 +116,7 @@
 	}
 	.vault-title {
 		background-repeat: none;
-		background-position: center;
+		background-position: top;
 		background-size: cover;
 		color: white;
 		font-weight: bold;

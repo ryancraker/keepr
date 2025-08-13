@@ -1,5 +1,6 @@
 <script setup>
 	import { AppState } from "@/AppState.js";
+	import HomeKeepCard from "@/components/HomeKeepCard.vue";
 	import KeepCard from "@/components/KeepCard.vue";
 	import { keepsService } from "@/services/KeepsService.js";
 	import { logger } from "@/utils/Logger.js";
@@ -19,12 +20,19 @@
 </script>
 
 <template>
-	<section class="container">
+	<section v-if="keeps" class="container">
 		<div class="row">
-			<div class="col-md-3 col-6 my-2 home-keep" v-for="keep in keeps" :key="keep.id">
-				<KeepCard :keep />
+			<div class="col-12">
+				<div class="masonry-container mt-2">
+					<div class="mb-4" v-for="keep in keeps" :key="keep.id">
+						<HomeKeepCard :keep />
+					</div>
+				</div>
 			</div>
 		</div>
+	</section>
+	<section v-else>
+		<h1>LOADING...<i class="mdi mdi-loading mdi-spin"></i></h1>
 	</section>
 </template>
 
