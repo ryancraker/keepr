@@ -2,12 +2,9 @@
 	import { computed } from "vue";
 	import { AppState } from "../AppState.js";
 	import { AuthService } from "../services/AuthService.js";
-	import { useRoute, useRouter } from "vue-router";
 
 	const identity = computed(() => AppState.identity);
 	const account = computed(() => AppState.account);
-	const router = useRouter();
-	const route = useRoute();
 
 	function login() {
 		AuthService.loginWithRedirect();
@@ -42,7 +39,9 @@
 					title="account menu">
 					<div v-if="account" class="list-group">
 						<RouterLink :to="{ name: 'Profile', params: { profileId: account.id } }">
-							<div class="list-group-item dropdown-item list-group-item-action">Manage Account</div>
+							<div class="list-group-item dropdown-item list-group-item-action">
+								Profile <i class="mdi mdi-account"></i>
+							</div>
 						</RouterLink>
 						<div
 							class="list-group-item dropdown-item list-group-item-action text-danger selectable"

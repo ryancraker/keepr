@@ -44,13 +44,13 @@
 			title="Delete this keep">
 			<i class="mdi mdi-close-circle"></i>
 		</button>
-		<div class="row h-100">
+		<div class="row h-100 d-flex">
 			<div
 				role="button"
 				@click="focusKeep()"
 				data-bs-target="#focusedKeepModal"
 				data-bs-toggle="modal"
-				class="h-80"
+				class="focus-modal"
 				:title="`Open '${keep.keep.name}' in a modal`"></div>
 			<div class="col-12">
 				<div
@@ -70,6 +70,10 @@
 </template>
 
 <style lang="scss" scoped>
+	.focus-modal {
+		flex-grow: 1;
+		height: 80%;
+	}
 	.keep-card {
 		position: relative;
 		height: 100%;
@@ -81,6 +85,10 @@
 		text-shadow: 0px 2px 3px black;
 		border-radius: 10px;
 		box-shadow: 0px 2px 5px black;
+		transition: ease 0.2s;
+		&:hover {
+			transform: scale(1.05);
+		}
 
 		&:hover .delete-button {
 			opacity: 1;
@@ -116,7 +124,7 @@
 	}
 
 	.keep-title {
-		height: 100%;
+		height: auto;
 	}
 
 	.creator-pic {

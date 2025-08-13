@@ -35,31 +35,18 @@
 
 <template>
 	<div class="keep-card container-fluid" :style="{ backgroundImage: `url(${keep.keep.img})` }">
-		<button
-			@click="deleteKeep()"
-			type="button"
-			class="delete-button"
-			v-if="account?.id == keep.keep.creatorId"
+		<button @click="deleteKeep()" type="button" class="delete-button" v-if="account?.id == keep.keep.creatorId"
 			title="Delete this keep">
 			<i class="mdi mdi-close-circle"></i>
 		</button>
-		<div class="row h-100">
-			<div
-				role="button"
-				@click="focusKeep()"
-				data-bs-target="#focusedKeepModal"
-				data-bs-toggle="modal"
-				class="h-80"
-				:title="`Open '${keep.keep.name}' in a modal`"></div>
+		<div class="row h-100 d-flex">
+			<div role="button" @click="focusKeep()" data-bs-target="#focusedKeepModal" data-bs-toggle="modal"
+				class="focus-modal" :title="`Open '${keep.keep.name}' in a modal`"></div>
 			<div class="col-12">
-				<div
-					class="d-flex justify-content-between align-items-end keep-title p-1 position-relative">
+				<div class="d-flex justify-content-between align-items-end keep-title p-1 position-relative">
 					<span>{{ keep.keep.name }}</span>
 					<RouterLink :to="{ name: 'Profile', params: { profileId: keep.keep.creatorId } }">
-						<img
-							:title="`Go to ${keep.keep.creator.name}'s page`"
-							class="creator-pic"
-							:src="keep.keep.creator.picture"
+						<img :title="`Go to ${keep.keep.creator.name}'s page`" class="creator-pic" :src="keep.keep.creator.picture"
 							:alt="keep.keep.creator.name" />
 					</RouterLink>
 				</div>
@@ -69,6 +56,11 @@
 </template>
 
 <style lang="scss" scoped>
+	.focus-modal {
+		flex-grow: 1;
+		height: 80%;
+	}
+
 	.keep-card {
 		position: relative;
 		height: 100%;
@@ -80,6 +72,11 @@
 		text-shadow: 0px 2px 3px black;
 		border-radius: 10px;
 		box-shadow: 0px 2px 5px black;
+		transition: ease 0.2s;
+
+		&:hover {
+			transform: scale(1.05);
+		}
 
 		&:hover .delete-button {
 			opacity: 1;
@@ -115,7 +112,7 @@
 	}
 
 	.keep-title {
-		height: 100%;
+		height: auto;
 	}
 
 	.creator-pic {

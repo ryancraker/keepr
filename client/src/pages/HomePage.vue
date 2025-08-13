@@ -21,7 +21,7 @@
 <template>
 	<section class="container">
 		<div class="row">
-			<div class="col-md-3 my-2 home-keep" v-for="keep in keeps" :key="keep.id">
+			<div class="col-md-3 col-6 my-2 home-keep" v-for="keep in keeps" :key="keep.id">
 				<KeepCard :keep />
 			</div>
 		</div>
@@ -33,6 +33,7 @@
 		background-color: white;
 		opacity: 1;
 	}
+
 	.home-keep {
 		height: 30dvh;
 	}

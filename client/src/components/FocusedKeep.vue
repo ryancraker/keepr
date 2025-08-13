@@ -4,6 +4,7 @@
 	import { vaultKeepsService } from "@/services/VaultKeepsService.js";
 	import { logger } from "@/utils/Logger.js";
 	import { Pop } from "@/utils/Pop.js";
+	import { Modal } from "bootstrap";
 	import { computed, ref, watch } from "vue";
 	const keep = computed(() => AppState.focusedKeep);
 	const account = computed(() => AppState.account);
@@ -53,29 +54,30 @@
 								<p class="fs-1 text-center">{{ keep.name }}</p>
 								<span>{{ keep.description }}</span>
 							</div>
-							<form
-								v-if="account"
-								class="col-6 d-flex align-items-end mb-2 gap-1"
-								@submit.prevent="addKeepToVault()">
-								<div class="d-flex gap-2">
-									<label for="vault"></label>
-									<select
-										v-model="vaultKeepData.vaultId"
-										class="form-select"
-										aria-label="Select from your vaults"
-										id="vault"
-										required>
-										<option disabled selected>Select a Vault</option>
-										<option v-for="vault in myVaults" :key="vault.id" :value="vault.id">
-											{{ vault.name }}
-										</option>
-									</select>
-									<button>save</button>
+							<div class="d-flex">
+
+								<form v-if="account" class="col-6 d-flex align-items-end mb-2 gap-1" @submit.prevent="addKeepToVault()">
+									<div class="d-flex gap-2">
+										<label for="vault"></label>
+										<select v-model="vaultKeepData.vaultId" class="form-select" aria-label="Select from your vaults"
+											id="vault" required>
+											<option disabled selected>Select a Vault</option>
+											<option v-for="vault in myVaults" :key="vault.id" :value="vault.id">
+												{{ vault.name }}
+											</option>
+										</select>
+										<button>save</button>
+									</div>
+								</form>
+								<div class="d-flex align-items-end justify-content-end gap-3 mb-2 col-6">
+									<RouterLink :to="{ name: 'Profile', params: { profileId: keep.creatorId } }">
+										<div class="d-flex align-items-end gap-2"
+											@click="Modal.getOrCreateInstance('#focusedKeepModal').hide()">
+											<span class="fw-bold fs-3">{{ keep.creator.name }}</span>
+											<img class="creator-pic" :src="keep.creator.picture" :alt="keep.creator.name" />
+										</div>
+									</RouterLink>
 								</div>
-							</form>
-							<div class="d-flex align-items-end justify-content-end gap-3 mb-2 col-6">
-								<span class="fw-bold fs-3">{{ keep.creator.name }}</span>
-								<img class="creator-pic" :src="keep.creator.picture" :alt="keep.creator.name" />
 							</div>
 						</div>
 					</div>
@@ -90,11 +92,18 @@
 		background-color: white;
 		opacity: 1;
 	}
+
+	a {
+		text-decoration: none;
+		color: black;
+	}
+
 	.focused-img {
 		width: 100%;
 		object-fit: cover;
 		object-position: center;
 	}
+
 	.keep-info {
 		flex-grow: 1;
 		display: flex;

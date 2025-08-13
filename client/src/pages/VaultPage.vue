@@ -1,6 +1,5 @@
 <script setup>
 	import { AppState } from "@/AppState.js";
-	import KeepCard from "@/components/KeepCard.vue";
 	import VaultKeepCard from "@/components/VaultKeepCard.vue";
 	import { vaultsService } from "@/services/VaultsService.js";
 	import { logger } from "@/utils/Logger.js";
@@ -81,12 +80,13 @@
 						<li><button @click="deleteVault()" class="btn btn-danger">Delete Vault</button></li>
 					</ul>
 				</div>
-
-				<span>{{ keeps.length }} Keeps</span>
+				<div class="my-4">
+					<span class="keep-counter">{{ keeps.length }} Keeps</span>
+				</div>
 			</div>
 			<div class="col-12">
 				<div class="row">
-					<div v-for="keep in keeps" :key="keep.id" class="col-3">
+					<div v-for="keep in keeps" :key="keep.id" class="col-md-3 col-6 keep">
 						<VaultKeepCard :keep />
 					</div>
 				</div>
@@ -98,6 +98,16 @@
 <style lang="scss" scoped>
 	a {
 		text-decoration: none;
+	}
+	.keep-counter {
+		font-size: 1.5rem;
+		font-weight: bold;
+		background-color: #ded6e9;
+		padding: 0.5rem;
+		border-radius: 10px;
+	}
+	.keep {
+		height: 25dvh;
 	}
 	.vault-title {
 		background-repeat: none;

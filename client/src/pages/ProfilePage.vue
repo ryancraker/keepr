@@ -55,25 +55,21 @@
 			<div class="col-12 text-center position-relative profile-header">
 				<img class="cover-img" :src="profile.coverImg" :alt="`${profile.name}'s cover image'`" />
 				<img class="creator-pic" :src="profile.picture" :alt="`${profile.name}'s profile image'`" />
+				<button type="button" data-bs-toggle="modal" data-bs-target="#accountModal" class="btn edit-button"
+					v-if="account?.id == profileId">
+					<i class="mdi mdi-dots-horizontal"></i>
+				</button>
 			</div>
 			<div class="col-12 text-center">
 				<p class="text-center fw-bold fs-1">
 					{{ profile.name }}
-					<button
-						type="button"
-						data-bs-toggle="modal"
-						data-bs-target="#accountModal"
-						class="btn"
-						v-if="account?.id == profileId">
-						<i class="mdi mdi-cog"></i>
-					</button>
 				</p>
 				<span class="fs-5">{{ vaults.length }} Vaults | {{ keeps.length }} Keeps</span>
 			</div>
 			<div class="col-12">
 				<p class="fs-1 fw-bold">Vaults</p>
 				<div class="row">
-					<div v-for="vault in vaults" :key="vault.id" class="col-3 mb-2">
+					<div v-for="vault in vaults" :key="vault.id" class="col-3 mb-4">
 						<VaultCard :vault />
 					</div>
 				</div>
@@ -81,12 +77,15 @@
 			<div class="col-12">
 				<p class="fs-1 fw-bold">Keeps</p>
 				<div class="row">
-					<div class="col-3 mb-2 profile-keep" v-for="keep in keeps" :key="keep.id">
+					<div class="col-3 mb-4 profile-keep" v-for="keep in keeps" :key="keep.id">
 						<KeepCard :keep />
 					</div>
 				</div>
 			</div>
 		</div>
+	</section>
+	<section v-else class="container">
+		<h1>LOADING PROFILE... <i class="mdi mdi-loading mdi-spin"></i></h1>
 	</section>
 	<FormModalWrapper modalId="account" modalHeader="Update your account">
 		<AccountForm />
@@ -94,6 +93,13 @@
 </template>
 
 <style lang="scss" scoped>
+	.edit-button {
+		position: absolute;
+		bottom: -3rem;
+		right: 10%;
+		font-size: 2rem;
+	}
+
 	.cover-img {
 		margin-top: 5dvh;
 		object-fit: cover;
@@ -102,18 +108,21 @@
 		height: 35dvh;
 		border-radius: 10px;
 	}
+
 	.creator-pic {
-		height: 20dvh;
+		height: 10rem;
 		object-fit: cover;
 		position: absolute;
 		bottom: -25%;
-		left: 42%;
+		left: 43%;
 		border: solid thin white;
 		box-shadow: 0px 0px 4px black;
 	}
+
 	.profile-header {
 		margin-bottom: 10dvh;
 	}
+
 	.profile-keep {
 		height: 10rem;
 	}

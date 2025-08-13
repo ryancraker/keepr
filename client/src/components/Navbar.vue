@@ -1,52 +1,38 @@
 <script setup>
-	import { ref, watch } from "vue";
-	import { loadState, saveState } from "../utils/Store.js";
 	import Login from "./Login.vue";
 	import FormModalWrapper from "./FormModalWrapper.vue";
 	import KeepForm from "./KeepForm.vue";
 	import VaultForm from "./VaultForm.vue";
 	import FocusedKeep from "./FocusedKeep.vue";
 	import KeepModal from "./KeepModal.vue";
+	import { useRoute } from "vue-router";
+	import { computed } from "vue";
+	import { AppState } from "@/AppState.js";
 
-	const theme = ref(loadState("theme") || "light");
-
-	// function toggleTheme() {
-	//   theme.value = theme.value == 'light' ? 'dark' : 'light'
-	// }
-
-	watch(
-		theme,
-		() => {
-			document.documentElement.setAttribute("data-bs-theme", theme.value);
-			saveState("theme", theme.value);
-		},
-		{ immediate: true }
-	);
+	const route = useRoute();
+	const account = computed(() => AppState.account);
 </script>
 
 <template>
-	<nav class="navbar navbar-expand-md bg-light border-bottom border-vue">
+	<nav class="navbar navbar-expand-md bg-light border-bottom border-black">
 		<div class="container-fluid gap-2 d-flex justify-content-between">
 			<div class="d-flex">
 				<RouterLink :to="{ name: 'Home' }" class="d-flex align-items-center">
 					<span class="home-button">Home</span>
 				</RouterLink>
 				<div class="dropdown">
-					<button
-						class="btn dropdown-toggle"
-						type="button"
-						data-bs-toggle="dropdown"
-						aria-expanded="false">
+					<button v-if="!route.path.includes('profile') || route.params.profileId == account?.id"
+						class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
 						Create
 					</button>
 					<ul class="dropdown-menu">
 						<li>
-							<button data-bs-target="#keepModal" data-bs-toggle="modal" class="btn" type="button">
+							<button data-bs-target="#keepModal" data-bs-toggle="modal" class="btn border-bottom w-100" type="button">
 								Keep
 							</button>
 						</li>
 						<li>
-							<button data-bs-target="#vaultModal" data-bs-toggle="modal" class="btn" type="button">
+							<button data-bs-target="#vaultModal" data-bs-toggle="modal" class="btn w-100" type="button">
 								Vault
 							</button>
 						</li>
@@ -75,6 +61,7 @@
 		background-color: white;
 		opacity: 1;
 	}
+
 	a {
 		text-decoration: none;
 	}

@@ -25,6 +25,7 @@ class KeepsService {
 		keeps.splice(keepIndex, 1);
 	}
 	async getKeeps() {
+		AppState.keeps = [];
 		const res = await api.get("api/keeps");
 		logger.log(res.data);
 		AppState.keeps = res.data.map(pojo => new Keep(pojo));
