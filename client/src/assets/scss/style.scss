@@ -25,6 +25,9 @@ main {
 		break-inside: avoid;
 		display: inline-block;
 	}
+	@media (width < 1000px) {
+		columns: 30dvw;
+	}
 }
 
 #pop-toast-container {

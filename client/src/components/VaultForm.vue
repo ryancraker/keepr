@@ -101,4 +101,14 @@
 	</section>
 </template>
 
-<style lang="scss" scoped></style>
+<style lang="scss" scoped>
+	.vault-button {
+		border: none;
+		background-color: var(--bs-secondary);
+	}
+	.img-preview img {
+		height: 80%;
+		object-fit: cover;
+		object-position: center;
+	}
+</style>

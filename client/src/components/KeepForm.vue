@@ -89,7 +89,8 @@
 		opacity: 1;
 	}
 	.img-preview {
-		height: 20dvh;
+		height: 100%;
+		object-fit: cover;
 	}
 
 	.keep-button {

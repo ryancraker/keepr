@@ -30,7 +30,7 @@
 
 <style lang="scss" scoped>
 	.modal-content {
-		height: 100%;
+		height: auto;
 		width: 100dvw;
 		padding: 0;
 		margin: 0;

@@ -118,6 +118,7 @@
 		width: 100%;
 		object-fit: cover;
 		object-position: center;
+		height: 100%;
 	}
 
 	.keep-info {
